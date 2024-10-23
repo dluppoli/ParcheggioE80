@@ -42,7 +42,8 @@ namespace ParcheggioE80
                         if (veicoli.Count == 0)
                             Console.WriteLine("Nessun veicolo presente");
                         else
-                            foreach (Veicolo v in veicoli) Console.WriteLine(v);
+                            //foreach (Veicolo v in veicoli) Console.WriteLine(v);
+                            veicoli.ForEach(x => Console.WriteLine(x));
                         break;
                     case "2":
                         Console.WriteLine($"Sono presenti n.{controller.GetNumeroPresenti()} veicoli");
@@ -72,11 +73,25 @@ namespace ParcheggioE80
                             Console.WriteLine($"Veicolo uscito con successo. Deve pagare {uscente.Importo}");
                         break;
                     case "5":
-                        veicoli = controller.GetSoste(ConsoleRead("Inserire la targa"));
+                        /*veicoli = controller.GetSoste(ConsoleRead("Inserire la targa"));
                         if (veicoli.Count == 0)
                             Console.WriteLine("Veicolo non trovato");
                         else
-                            foreach (Veicolo v in veicoli) Console.WriteLine(v);
+                            foreach (Veicolo v in veicoli) Console.WriteLine(v);*/
+                        bool trovato = false;
+                        /*foreach(Veicolo v in controller.GetSoste(ConsoleRead("Inserire la targa"))
+                        {
+                            Console.WriteLine(v);
+                            trovato = true;
+                        }*/
+                        controller.GetSoste(ConsoleRead("Inserire la targa"))
+                            .ForEach(v => {
+                                Console.WriteLine(v);
+                                trovato = true;
+                            });
+                        
+                        if (!trovato) Console.WriteLine("Veicolo non trovato");
+
                         break;
                     case "9":
                         Console.WriteLine( "Arrivederci");

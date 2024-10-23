@@ -52,9 +52,9 @@ namespace ParcheggioE80.Models
 
 		public override string ToString()
 		{
-			string risultato = $"{_targa} - Entrata: {_ingresso.ToLongDateString()} ";
+			string risultato = $"{_targa} - Entrata: {_ingresso.ToString()} ";
 			if (_uscita != null)
-				risultato += $"- Uscita: {((DateTime)_uscita).ToLongDateString()} ";
+				risultato += $"- Uscita: {((DateTime)_uscita).ToString()} ";
             if (_importo != null)
                 risultato += $"- Importo: {_importo} euro";
 			return risultato;

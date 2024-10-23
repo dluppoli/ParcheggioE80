@@ -23,23 +23,13 @@ namespace ParcheggioE80.Controllers
             return parcheggio; 
         }
 
-        public List<Veicolo> GetPresenti() { 
-            List<Veicolo> risultati = new List<Veicolo>();
-
-            foreach (Veicolo veicolo in veicoli)
-            {
-                if (veicolo.Uscita == null) risultati.Add(veicolo);
-            }
-            return risultati;
+        public List<Veicolo> GetPresenti() {
+            return veicoli.FindAll( v => v.Uscita == null);
         }
 
         private Veicolo GetPresente(string targa)
         {
-            foreach( Veicolo veicolo in GetPresenti() )
-            {
-                if( veicolo.Targa == targa.ToUpper() ) return veicolo;
-            }
-            return null;
+            return GetPresenti().Find(v => v.Targa == targa.ToUpper());
         }
 
         public int GetNumeroPresenti()
@@ -98,13 +88,9 @@ namespace ParcheggioE80.Controllers
 
         public List<Veicolo> GetSoste(string targa)
         {
-            List<Veicolo> risultati = new List<Veicolo>();
-
-            foreach (Veicolo veicolo in veicoli)
-            {
-                if (veicolo.Targa == targa.ToUpper()) risultati.Add(veicolo);
-            }
-            return risultati;
+            return veicoli.FindAll(v => v.Targa == targa.ToUpper())
+                .OrderByDescending( v=> v.Ingresso)
+                .ToList();
         }
     }
 }
