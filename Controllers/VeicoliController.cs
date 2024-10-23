@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ParcheggioE80.Controllers
 {
+    public class ParcheggioPienoException : Exception { }
+    public class VeicoloPresenteExcepion : Exception { }
+
+
     internal class VeicoliController
     {
         private List<Veicolo> veicoli;
@@ -37,13 +41,14 @@ namespace ParcheggioE80.Controllers
             return GetPresenti().Count;
         }
 
-        public EntrataVeicoloResult Entrata(string targa)
+        public void Entrata(string targa)
         {
-            if (GetNumeroPresenti() == parcheggio.Posti) return EntrataVeicoloResult.ParcheggioPieno;
-            if( GetPresente(targa) != null ) return EntrataVeicoloResult.VeicoloPresente;
+            if (GetNumeroPresenti() == parcheggio.Posti)
+                throw new ParcheggioPienoException();
+            if( GetPresente(targa) != null )
+                throw new VeicoloPresenteExcepion();
 
             veicoli.Add(new Veicolo(targa));
-            return EntrataVeicoloResult.Ok;
         }
 
         public Veicolo Uscita(string targa)

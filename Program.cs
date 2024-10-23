@@ -49,20 +49,22 @@ namespace ParcheggioE80
                         Console.WriteLine($"Sono presenti n.{controller.GetNumeroPresenti()} veicoli");
                         break;
                     case "3":
-                        switch(controller.Entrata(ConsoleRead("Inserire la targa")))
+                        try
                         {
-                            case EntrataVeicoloResult.Ok:
-                                Console.WriteLine("Veicolo entrato con successo");
-                                break;
-                            case EntrataVeicoloResult.VeicoloPresente:
-                                Console.WriteLine("Veicolo già in sosta");
-                                break;
-                            case EntrataVeicoloResult.ParcheggioPieno:
-                                Console.WriteLine("Parcheggio pieno");
-                                break;
-                            default:
-                                Console.WriteLine("Errore nell'entrata del veicolo");
-                                break;
+                            controller.Entrata(ConsoleRead("Inserire la targa"));
+                            Console.WriteLine("Veicolo entrato con successo");
+                        }
+                        catch (ParcheggioPienoException e)
+                        {
+                            Console.WriteLine("Parcheggio pieno");
+                        }
+                        catch (VeicoloPresenteExcepion e)
+                        {
+                            Console.WriteLine("Veicolo già presente");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Errore generico");
                         }
                         break;
                     case "4":
